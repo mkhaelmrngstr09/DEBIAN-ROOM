@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Debian Room - Pusat Pembelajaran Linux Debian</title>
+    <!-- Google Fonts & Font Awesome Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary: #d70a53; /* Warna Khas Debian */
+            --primary-dark: #a1003c;
+            --bg-dark: #0f172a;
+            --card-bg: #1e293b;
+            --text-light: #f8fafc;
+            --text-muted: #94a3b8;
+            --accent: #38bdf8;
+            --code-bg: #090d16;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            line-height: 1.6;
+        }
+
+        /* Navbar */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(15, 23, 42, 0.9);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            z-index: 1000;
+        }
+
+        nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-light);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo i {
+            color: var(--primary);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 1.5rem;
+        }
+
+        .nav-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 8rem 2rem 4rem;
+            text-align: center;
+            background: radial-gradient(circle at top, rgba(215, 10, 83, 0.15), transparent 70%);
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .hero h1 span {
+            color: var(--primary);
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            max-width: 700px;
+            margin: 0 auto 2rem;
+        }
+
+        /* Container Sections */
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+        }
+
+        section {
+            margin-bottom: 4rem;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 0.5rem;
+        }
+
+        .section-title i {
+            color: var(--primary);
+        }
+
+        /* Grid Layout Cards */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .card {
+            background: var(--card-bg);
+            padding: 1.5rem;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: transform 0.3s, border-color 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary);
+        }
+
+        .card h3 {
+            margin-bottom: 0.5rem;
+            color: var(--accent);
+        }
+
+        /* Timeline / Steps */
+        .steps-list {
+            list-style: none;
+            position: relative;
+            padding-left: 20px;
+        }
+
+        .steps-list::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: var(--primary);
+        }
+
+        .step-item {
+            position: relative;
+            padding-left: 20px;
+            margin-bottom: 1.5rem;
+        }
+
+        .step-item::before {
+            content: '';
+            position: absolute;
+            left: -25px;
+            top: 5px;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--primary);
+        }
+
+        .step-item h4 {
+            font-size: 1.1rem;
+            margin-bottom: 0.3rem;
+        }
+
+        /* Table Styling */
+        .table-container {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: var(--card-bg);
+            border-radius: 8px;
+            overflow: hidden;
+            margin-top: 1rem;
+        }
+
+        th, td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        th {
+            background-color: var(--primary-dark);
+            color: #fff;
+        }
+
+        /* Code Block Styling */
+        .code-block {
+            background: var(--code-bg);
+            padding: 1.2rem;
+            border-radius: 8px;
+            font-family: 'Fira Code', monospace;
+            border-left: 4px solid var(--primary);
+            overflow-x: auto;
+            margin: 1rem 0;
+        }
+
+        .code-block code {
+            color: #38bdf8;
+        }
+
+        .comment {
+            color: #6b7280;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 2rem;
+            background: #090d16;
+            color: var(--text-muted);
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        /* Responsive Navbar */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header / Navigasi -->
+    <header>
+        <nav>
+            <div class="logo">
+                <i class="fa-brands fa-debian"></i> Debian Room
+            </div>
+            <ul class="nav-links">
+                <li><a href="#pengertian">Pengertian</a></li>
+                <li><a href="#instalasi">Alur Instalasi</a></li>
+                <li><a href="#virtualbox">VirtualBox</a></li>
+                <li><a href="#ssh">Konfigurasi SSH</a></li>
+                <li><a href="#remote">Remote Server</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <h1>Selamat Datang di <span>Debian Room</span></h1>
+        <p>Pusat modul dan panduan teknis pembelajaran Administrasi Server Linux Debian dari tingkat dasar hingga remote access.</p>
+    </section>
+
+    <div class="container">
+
+        <!-- Section 1: Pengertian & Keunggulan -->
+        <section id="pengertian">
+            <h2 class="section-title"><i class="fa-solid fa-server"></i> 1. Pengertian & Keunggulan Linux Debian</h2>
+            <p style="margin-bottom: 1.5rem;">Debian Linux adalah salah satu sistem operasi berbasis kernel Linux yang dikembangkan secara sukarela oleh komunitas global melalui <strong>Debian Project</strong>. Dikenal sebagai salah satu distribusi paling stabil dan aman, Debian menjadi fondasi utama bagi ratusan distro populer lainnya seperti Ubuntu, Kali Linux, dan Linux Mint.</p>
+
+            <div class="grid">
+                <div class="card">
+                    <h3><i class="fa-solid fa-shield-halved"></i> Stabilitas Tinggi</h3>
+                    <p>Siklus pengujian paket yang ketat membuat Debian sangat ideal dijadikan fondasi server produksi tanpa reboot berkala.</p>
+                </div>
+                <div class="card">
+                    <h3><i class="fa-solid fa-box"></i> Manajemen Paket APT</h3>
+                    <p>Memanfaatkan ekosistem paket <code>.deb</code> dan utilitas APT untuk instalasi, pembaruan, dan resolusi dependensi secara efisien.</p>
+                </div>
+                <div class="card">
+                    <h3><i class="fa-solid fa-microchip"></i> Kompatibilitas Arsitektur</h3>
+                    <p>Mendukung berbagai arsitektur perangkat keras mulai dari x86_64, ARM (Raspberry Pi), hingga arsitektur mainframe.</p>
+                </div>
+                <div class="card">
+                    <h3><i class="fa-solid fa-code-branch"></i> Filosofi Open Source</h3>
+                    <p>Memegang teguh prinsip <em>Debian Free Software Guidelines (DFSG)</em> untuk menjamin kebebasan perangkat lunak.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 2: Alur Instalasi Umum -->
+        <section id="instalasi">
+            <h2 class="section-title"><i class="fa-solid fa-list-check"></i> 2. Alur Instalasi Sistem Operasi Debian</h2>
+            <ul class="steps-list">
+                <li class="step-item">
+                    <h4>1. Media Booting</h4>
+                    <p>Menyiapkan ISO (Netinst/DVD) dan flashing ke USB Flashdrive menggunakan Rufus atau BalenaEtcher.</p>
+                </li>
+                <li class="step-item">
+                    <h4>2. Boot & Installer</h4>
+                    <p>Memilih mode Graphical Install (GUI) atau Text-Based Install pada bootloader GRUB.</p>
+                </li>
+                <li class="step-item">
+                    <h4>3. Lokasi & Bahasa</h4>
+                    <p>Konfigurasi bahasa sistem, wilayah zona waktu, dan layout keyboard (Standard US).</p>
+                </li>
+                <li class="step-item">
+                    <h4>4. Jaringan & Akun</h4>
+                    <p>Pengaturan Hostname, Domain, Password akun root, serta pembuatan user non-privilege.</p>
+                </li>
+                <li class="step-item">
+                    <h4>5. Partisi Disk</h4>
+                    <p>Skema partisi Guided (Gunakan seluruh disk) atau Manual (Pemisahan <code>/</code>, <code>/home</code>, dan <code>swap</code>).</p>
+                </li>
+                <li class="step-item">
+                    <h4>6. Seleksi Perangkat Lunak</h4>
+                    <p>Pemilihan komponen seperti Desktop Environment, SSH Server, dan Standard System Utilities.</p>
+                </li>
+            </ul>
+        </section>
+
+        <!-- Section 3: VirtualBox Guide -->
+        <section id="virtualbox">
+            <h2 class="section-title"><i class="fa-solid fa-desktop"></i> 3. Panduan Instalasi di VirtualBox</h2>
+            <p>Langkah-langkah praktis membuat dan menginstal Debian di dalam lingkungan virtualisasi VirtualBox:</p>
+
+            <div class="grid" style="margin-top: 1.5rem;">
+                <div class="card">
+                    <h3>1. Membuat VM Baru</h3>
+                    <p>Buka VirtualBox &rarr; Klik <strong>New</strong>. Isi Nama Mesin (contoh: <em>Debian-Server</em>), Tipe: Linux, Versi: Debian (64-bit).</p>
+                </div>
+                <div class="card">
+                    <h3>2. Alokasi Memori & CPU</h3>
+                    <p>Tentukan RAM minimal 1024 MB (1 GB) untuk CLI, atau 2048 MB (2 GB) untuk GUI. Alokasikan 1-2 vCPU.</p>
+                </div>
+                <div class="card">
+                    <h3>3. Hard Disk Virtual</h3>
+                    <p>Pilih <em>Create a Virtual Hard Disk Now</em> &rarr; Format VDI (Dynamically Allocated) &rarr; Ukuran minimal 10 GB - 20 GB.</p>
+                </div>
+                <div class="card">
+                    <h3>4. Mount Image ISO</h3>
+                    <p>Masuk ke <strong>Settings &rarr; Storage</strong> &rarr; Klik ikon CD bertuliskan <em>Empty</em> &rarr; Cari dan pilih file ISO Debian Anda.</p>
+                </div>
+                <div class="card">
+                    <h3>5. Konfigurasi Network</h3>
+                    <p>Pada menu <strong>Settings &rarr; Network</strong> &rarr; Ubah <em>Attached to</em> menjadi <strong>Bridged Adapter</strong> atau NAT.</p>
+                </div>
+                <div class="card">
+                    <h3>6. Jalankan Instalasi</h3>
+                    <p>Klik <strong>Start</strong>, pilih opsi <em>Graphical Install</em>, lalu ikuti petunjuk hingga proses selesai dan minta reboot.</p>
+                </div>
+            </div>
+
+            <h3 style="margin-top: 2rem; color: var(--accent);">Spesifikasi Rekomendasi Virtual Machine</h3>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Komponen</th>
+                            <th>Minimal (CLI Server)</th>
+                            <th>Rekomendasi (GUI Desktop)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>RAM</td>
+                            <td>512 MB - 1 GB</td>
+                            <td>2 GB - 4 GB</td>
+                        </tr>
+                        <tr>
+                            <td>Penyimpanan</td>
+                            <td>8 GB</td>
+                            <td>20 GB</td>
+                        </tr>
+                        <tr>
+                            <td>CPU Core</td>
+                            <td>1 Core</td>
+                            <td>2 Core</td>
+                        </tr>
+                        <tr>
+                            <td>Tipe Network</td>
+                            <td>Bridged / Host-Only</td>
+                            <td>NAT / Bridged</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Section 4: SSH Setup -->
+        <section id="ssh">
+            <h2 class="section-title"><i class="fa-solid fa-terminal"></i> 4. Instalasi & Konfigurasi OpenSSH Server</h2>
+            <p>SSH (Secure Shell) memungkinkan akses administrasi server jarak jauh secara terenkripsi melalui jaringan.</p>
+
+            <h3 style="margin-top: 1.5rem;">Langkah Instalasi Paket SSH</h3>
+            <p>Masuk ke terminal Debian sebagai superuser (<code>root</code>), lalu jalankan perintah berikut:</p>
+
+            <div class="code-block">
+                <span class="comment"># 1. Perbarui indeks repositori paket</span><br>
+                <code>apt update</code><br><br>
+                <span class="comment"># 2. Instal paket OpenSSH Server</span><br>
+                <code>apt install openssh-server -y</code><br><br>
+                <span class="comment"># 3. Aktifkan dan jalankan layanan SSH</span><br>
+                <code>systemctl enable ssh --now</code><br><br>
+                <span class="comment"># 4. Verifikasi status operasional layanan</span><br>
+                <code>systemctl status ssh</code>
+            </div>
+
+            <h3 style="margin-top: 1.5rem;">Memeriksa Alamat IP Server</h3>
+            <p>Gunakan perintah berikut untuk mengetahui IP Address server yang akan di-remote:</p>
+            <div class="code-block">
+                <code>ip a</code> <span class="comment"># atau jalankan: hostname -I</span>
+            </div>
+        </section>
+
+        <!-- Section 5: Remote Access -->
+        <section id="remote">
+            <h2 class="section-title"><i class="fa-solid fa-network-wired"></i> 5. Cara Remote Server Debian</h2>
+            
+            <div class="grid">
+                <div class="card">
+                    <h3><i class="fa-brands fa-windows"></i> Melalui CMD / PowerShell</h3>
+                    <p>Gunakan perintah bawaan terminal Windows:</p>
+                    <div class="code-block">
+                        <code>ssh user_debian@192.168.1.50</code>
+                    </div>
+                    <small>*Ganti 192.168.1.50 dengan IP Debian Anda.</small>
+                </div>
+
+                <div class="card">
+                    <h3><i class="fa-solid fa-laptop-code"></i> Melalui Aplikasi PuTTY</h3>
+                    <ol style="padding-left: 1.2rem; margin-top: 0.5rem;">
+                        <li>Buka aplikasi PuTTY.</li>
+                        <li>Isi <strong>Host Name (or IP address)</strong>.</li>
+                        <li>Pastikan Port: <strong>22</strong> & Connection type: <strong>SSH</strong>.</li>
+                        <li>Klik <strong>Open</strong> dan masukkan kredensial login.</li>
+                    </ol>
+                </div>
+            </div>
+
+            <div class="card" style="margin-top: 1.5rem; border-left: 4px solid #eab308;">
+                <h3 style="color: #eab308;"><i class="fa-solid fa-lock"></i> Tips Keamanan SSH</h3>
+                <ul style="padding-left: 1.2rem; margin-top: 0.5rem;">
+                    <li>Hindari mengaktifkan login langsung sebagai <code>root</code> via SSH pada file <code>/etc/ssh/sshd_config</code> (set <code>PermitRootLogin no</code>).</li>
+                    <li>Ubah port default SSH (22) ke port kustom untuk menghindari serangan brute-force otomatis.</li>
+                    <li>Gunakan autentikasi berbasis kunci (<em>SSH Key Pair</em>) daripada kredensial password polos.</li>
+                </ul>
+            </div>
+        </section>
+
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2026 Debian Room - Modul Pembelajaran Linux Debian Server.</p>
+    </footer>
+
+</body>
+</html>
